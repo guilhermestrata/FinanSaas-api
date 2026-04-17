@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model FinanceProfile {
+  userId           String  @id
+  netMonthlyIncome Float
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model SalaryChange {
+  id            String   @id @default(uuid())
+  userId        String
+  effectiveFrom String
+  newNetMonthly Float
+  createdAt     DateTime @default(now())
+}
+
+model FixedExpense {
+  id        String   @id @default(uuid())
+  userId    String
+  name      String
+  amount    Float
+  dueDay    Int
+  createdAt DateTime @default(now())
+}
+
+model Boleto {
+  id        String   @id @default(uuid())
+  userId    String
+  name      String
+  barcode   String
+  kind      String
+  amount    Float
+  dueDate   String?
+  status    String
+  createdAt DateTime @default(now())
+  paidAt    DateTime?
+}
