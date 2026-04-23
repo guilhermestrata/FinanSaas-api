@@ -22,7 +22,8 @@ export async function fixedExpenseRoutes(app: FastifyInstance) {
 
     const parsed = schema.safeParse(req.body);
     if (!parsed.success) {
-      return reply.status(400).send(apiError('INVALID_BODY', 'Body inválido.'));
+      console.log('LALAL', parsed.error.format())
+      return reply.status(400).send(apiError('INVALID_BODY', 'Body inválido.'))
     }
 
     const item = await prisma.fixedExpense.create({
@@ -45,6 +46,6 @@ export async function fixedExpenseRoutes(app: FastifyInstance) {
     }
 
     await prisma.fixedExpense.deleteMany({ where: { id: params.data.id, userId: USER_ID } });
-    return reply.status(204).send();
+    return reply.status(200).send({ success: true })
   });
 }
